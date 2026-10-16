@@ -5,8 +5,8 @@
 [ext_resource type="Shader" uid="uid://cl2yej1achkeh" path="res://assets/shaders/retro_post.gdshader" id="3_5fl30"]
 [ext_resource type="PackedScene" uid="uid://ckxjw2b0meu4t" path="res://src/gameplay/player/player.tscn" id="3_tif62"]
 [ext_resource type="PackedScene" uid="uid://cbu0qdty51cof" path="res://src/gameplay/car/car.tscn" id="5_yfg2f"]
-[ext_resource type="Texture2D" uid="uid://dhxg4i6slw1ee" path="res://assets/textures/road.png" id="6_ijhwt"]
-[ext_resource type="PackedScene" uid="uid://bghogcciwwt1w" path="res://assets/models/guardrail_by_dani.fbx" id="7_hnitr"]
+[ext_resource type="Resource" uid="uid://bko3c327w5aah" path="res://src/gameplay/footsteps/surfaces/rock.tres" id="6_ahfbv"]
+[ext_resource type="PackedScene" uid="uid://pr1p37ydd4cd" path="res://src/gameplay/road/road_segment.tscn" id="7_hnitr"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_5fl30"]
 render_priority = 0
@@ -28,16 +28,12 @@ background_mode = 2
 sky = SubResource("Sky_tif62")
 tonemap_agx_contrast = 2.0
 glow_enabled = true
+glow_intensity = 0.5
 glow_bloom = 0.8
-fog_light_color = Color(0.65362, 0.68431395, 0.7325258, 1)
+adjustment_enabled = true
+adjustment_brightness = 0.5
 
 [sub_resource type="WorldBoundaryShape3D" id="WorldBoundaryShape3D_h45xw"]
-
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_hnitr"]
-albedo_texture = ExtResource("6_ijhwt")
-
-[sub_resource type="PlaneMesh" id="PlaneMesh_h45xw"]
-size = Vector2(15, 15)
 
 [node name="Main" type="Node" unique_id=1437717578]
 script = ExtResource("1_6t2ow")
@@ -52,7 +48,7 @@ environment = SubResource("Environment_5fl30")
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="." unique_id=337253324]
 transform = Transform3D(-0.8660254, -0.43301278, 0.25, 0, 0.49999997, 0.86602545, -0.50000006, 0.75, -0.43301266, 0, 0, 0)
-light_energy = 0.5
+light_energy = 0.25
 shadow_enabled = true
 shadow_opacity = 0.5
 shadow_blur = 2.0
@@ -60,19 +56,27 @@ shadow_blur = 2.0
 [node name="Player" parent="." unique_id=2101383689 instance=ExtResource("3_tif62")]
 
 [node name="Car" parent="." unique_id=647421816 instance=ExtResource("5_yfg2f")]
-transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 5.5471735, 2.2235482, 0)
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 5.547, 0.77446747, 0)
 
 [node name="StaticBody3D" type="StaticBody3D" parent="." unique_id=805912533]
+metadata/surface = ExtResource("6_ahfbv")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D" unique_id=1915910145]
 shape = SubResource("WorldBoundaryShape3D_h45xw")
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=1215351403]
-material_override = SubResource("StandardMaterial3D_hnitr")
-mesh = SubResource("PlaneMesh_h45xw")
+[node name="RoadSegment" parent="." unique_id=392582338 instance=ExtResource("7_hnitr")]
 
-[node name="Guardrail" parent="." unique_id=485062515 instance=ExtResource("7_hnitr")]
-transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, -0.7040415, -0.42126155, 6.726591)
+[node name="RoadSegment2" parent="." unique_id=741493968 instance=ExtResource("7_hnitr")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 19, 0, 0)
 
-[node name="Guardrail2" parent="." unique_id=631159366 instance=ExtResource("7_hnitr")]
-transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, -0.7040415, -0.42126155, -6.8316917)
+[node name="RoadSegment3" parent="." unique_id=1444083952 instance=ExtResource("7_hnitr")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 38, 0, 0)
+
+[node name="RoadSegment4" parent="." unique_id=1191795856 instance=ExtResource("7_hnitr")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 57, 0, 0)
+
+[node name="RoadSegment5" parent="." unique_id=1383141765 instance=ExtResource("7_hnitr")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 76, 0, 0)
+
+[node name="RoadSegment6" parent="." unique_id=1571905333 instance=ExtResource("7_hnitr")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 95, 0, 0)

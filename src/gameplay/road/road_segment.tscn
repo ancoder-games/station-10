@@ -1,0 +1,42 @@
+[gd_scene format=3 uid="uid://pr1p37ydd4cd"]
+
+[ext_resource type="Texture2D" uid="uid://dhxg4i6slw1ee" path="res://assets/textures/road.png" id="1_xu42q"]
+[ext_resource type="PackedScene" uid="uid://bghogcciwwt1w" path="res://assets/models/guardrail_by_dani.fbx" id="2_0xuyo"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_xu42q"]
+albedo_texture = ExtResource("1_xu42q")
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_0xuyo"]
+size = Vector2(19.5, 15)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_xu42q"]
+size = Vector3(19.54419, 3.097168, 0.47027588)
+
+[node name="RoadSegment" type="Node3D" unique_id=392582338]
+
+[node name="Road" type="MeshInstance3D" parent="." unique_id=1379439738]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9.75, 0, 0)
+material_override = SubResource("StandardMaterial3D_xu42q")
+mesh = SubResource("PlaneMesh_0xuyo")
+
+[node name="Guardrail" parent="." unique_id=638325465 instance=ExtResource("2_0xuyo")]
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 4.2446723, -0.42126155, 6.726591)
+
+[node name="Guardrail2" parent="." unique_id=450856581 instance=ExtResource("2_0xuyo")]
+transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, 4.2446723, -0.42126155, -6.8316917)
+
+[node name="Guardrail3" parent="." unique_id=1769039777 instance=ExtResource("2_0xuyo")]
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 14.280863, -0.42126155, 6.726591)
+
+[node name="Guardrail4" parent="." unique_id=1835656823 instance=ExtResource("2_0xuyo")]
+transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, 14.280863, -0.42126155, -6.8316917)
+
+[node name="StaticBody3D2" type="StaticBody3D" parent="." unique_id=282978231]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D2" unique_id=682944640]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9.626693, 1.048584, 6.755207)
+shape = SubResource("BoxShape3D_xu42q")
+
+[node name="CollisionShape3D2" type="CollisionShape3D" parent="StaticBody3D2" unique_id=1518879080]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9.626693, 1.048584, -6.762352)
+shape = SubResource("BoxShape3D_xu42q")

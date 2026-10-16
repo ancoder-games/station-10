@@ -2,6 +2,7 @@
 
 [ext_resource type="Script" uid="uid://b2in34k04gyry" path="res://src/gameplay/player/player.gd" id="1_kh5p4"]
 [ext_resource type="Script" uid="uid://bqtp61yr5d4qe" path="res://src/gameplay/player/movement_component.gd" id="2_k2146"]
+[ext_resource type="AudioStream" uid="uid://geojkbvd1rpt" path="res://assets/sfx/Ambiance_Night_Loop_Stereo.wav" id="2_rdc6l"]
 [ext_resource type="Script" uid="uid://8d50vj73xfol" path="res://src/gameplay/player/camera_control_component.gd" id="3_sjr3t"]
 [ext_resource type="PackedScene" uid="uid://dkfriifyw5do8" path="res://assets/models/arms.glb" id="4_sjr3t"]
 [ext_resource type="Texture2D" uid="uid://kyj07b0gqcug" path="res://assets/textures/progress.png" id="5_d3trc"]
@@ -182,7 +183,7 @@ _data = {
 &"uncrouch": SubResource("Animation_7jatv")
 }
 
-[node name="Player" type="CharacterBody3D" unique_id=2101383689 node_paths=PackedStringArray("movement_comp", "camera_control_comp", "crouch_anim", "arms_anim", "head", "item_placement", "interaction_cast", "crouch_cast", "interact_progress", "interact_text", "crosshair_center", "subtitles_container")]
+[node name="Player" type="CharacterBody3D" unique_id=2101383689 node_paths=PackedStringArray("movement_comp", "camera_control_comp", "crouch_anim", "arms_anim", "head", "item_placement", "interaction_cast", "crouch_cast", "interact_progress", "interact_text", "crosshair_center", "ambience", "subtitles_container")]
 collision_layer = 2
 script = ExtResource("1_kh5p4")
 movement_comp = NodePath("MovementComponent")
@@ -196,7 +197,14 @@ crouch_cast = NodePath("CrouchCast")
 interact_progress = NodePath("HUD/CenterContainer/InteractionProgress")
 interact_text = NodePath("HUD/CenterContainer/MarginContainer/InteractionText")
 crosshair_center = NodePath("HUD/Crosshair")
+ambience = NodePath("Ambience")
 subtitles_container = NodePath("HUD/MarginContainer/Subtitles")
+
+[node name="Ambience" type="AudioStreamPlayer" parent="." unique_id=2025012573]
+stream = ExtResource("2_rdc6l")
+volume_db = -10.0
+pitch_scale = 0.9
+autoplay = true
 
 [node name="MovementComponent" type="Node" parent="." unique_id=1029400876 node_paths=PackedStringArray("body", "footstep_player", "surface_ray", "camera")]
 script = ExtResource("2_k2146")
@@ -326,7 +334,6 @@ target_position = Vector3(0, -0.5, 0)
 hit_from_inside = true
 
 [node name="Footsteps" type="AudioStreamPlayer3D" parent="SurfaceCast" unique_id=306018507]
-volume_db = -20.0
 
 [node name="HUD" type="CanvasLayer" parent="." unique_id=1383222394]
 

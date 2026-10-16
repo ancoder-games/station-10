@@ -13,7 +13,7 @@ class_name Player extends CharacterBody3D
 @export var interact_progress: TextureProgressBar
 @export var interact_text: Label
 @export var crosshair_center: Control
-
+@export var ambience: AudioStreamPlayer
 
 @export var subtitles_container: VBoxContainer
 

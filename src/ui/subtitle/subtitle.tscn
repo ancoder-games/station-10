@@ -2,6 +2,7 @@
 
 [ext_resource type="Script" uid="uid://btynetgu8j8mj" path="res://src/ui/subtitle/subtitle.gd" id="1_gfic7"]
 [ext_resource type="FontFile" uid="uid://cpx03qg66oxi0" path="res://assets/ui/fonts/PixelPublic/PublicPixel.ttf" id="2_ebqmc"]
+[ext_resource type="AudioStream" uid="uid://cqwxbghlj48ww" path="res://assets/sfx/talk.wav" id="3_wkotb"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_dyjkh"]
 font = ExtResource("2_ebqmc")
@@ -49,6 +50,11 @@ _data = {
 &"fade_out": SubResource("Animation_gfic7")
 }
 
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_h45xw"]
+random_pitch = 1.0594631
+streams_count = 1
+stream_0/stream = ExtResource("3_wkotb")
+
 [node name="Subtitle" type="HBoxContainer" unique_id=1721534359]
 size_flags_horizontal = 4
 theme_override_constants/separation = 10
@@ -73,3 +79,10 @@ visible_characters_behavior = 1
 [node name="Anim" type="AnimationPlayer" parent="." unique_id=1579783291]
 unique_name_in_owner = true
 libraries/ = SubResource("AnimationLibrary_u8d28")
+
+[node name="SFX" type="AudioStreamPlayer" parent="." unique_id=149928487]
+unique_name_in_owner = true
+stream = SubResource("AudioStreamRandomizer_h45xw")
+volume_db = -30.0
+pitch_scale = 0.7
+bus = &"Talk"

@@ -8,7 +8,7 @@ var player: Player
 var subtitle_queue: Array[Dictionary] = []
 
 func _ready() -> void:
-	add_queue("You", "Hello!")
+	add_queue("You", "Hello... How are you?")
 
 var queue_timer: float = 0.0
 

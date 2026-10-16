@@ -3,6 +3,7 @@ class_name Subtitle extends HBoxContainer
 @onready var name_label: Label = %Name
 @onready var text_label: Label = %Text
 @onready var anim: AnimationPlayer = %Anim
+@onready var sfx: AudioStreamPlayer = %SFX
 
 @export var type_delay: float = 0.1
 @export var live_time: float = 4.0
@@ -23,9 +24,18 @@ func typewrite(person: String, text: String, color: Color) -> void:
 	text_label.text = text
 	anim.play("RESET")
 	text_label.visible_characters = 0
-	for _i: int in text_label.text.length():
+	for i: int in text_label.text.length():
 		await get_tree().create_timer(type_delay).timeout
 		text_label.visible_characters += 1
+		if text_label.text[i] in ["a", "e", "i", "o", "u"]:
+			sfx.pitch_scale = 0.5
+		else:
+			sfx.pitch_scale = 0.7
+		sfx.play()
+		if text_label.text[i] in [".", "!", "?"]:
+			await get_tree().create_timer(type_delay * 2).timeout
+		if text_label.text[i] in [",", "-"]:
+			await get_tree().create_timer(type_delay).timeout
 	done.emit()
 	await get_tree().create_timer(live_time).timeout
 	anim.play("fade_out")

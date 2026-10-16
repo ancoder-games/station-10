@@ -7,6 +7,11 @@
 [ext_resource type="Script" uid="uid://bgvwpw0l60rgh" path="res://src/gameplay/interactable/interactable_component.gd" id="5_ivtvr"]
 [ext_resource type="Texture2D" uid="uid://bnbbk851nlu82" path="res://assets/textures/gas_meter.png" id="6_j7mmk"]
 [ext_resource type="Texture2D" uid="uid://lo70n331wirr" path="res://assets/textures/gas_meter_hand.png" id="7_pxc0n"]
+[ext_resource type="AudioStream" uid="uid://cbgl42bygvtc6" path="res://assets/sfx/Car_door_opening.wav" id="8_ntmdn"]
+[ext_resource type="AudioStream" uid="uid://eb4adt7j81yx" path="res://assets/sfx/Vehicle_Car_Engine_Idle_Exterior_Loop_Mono_01.wav" id="9_u7wjx"]
+[ext_resource type="AudioStream" uid="uid://c5f4yhyw3qrk3" path="res://assets/sfx/Vehicle_Car_Engine_Idle_Interior_Loop_Mono_01.wav" id="10_upvvj"]
+[ext_resource type="AudioStream" uid="uid://66wfi0apsnfp" path="res://assets/sfx/Vehicle_Car_Drive_Interior_Loop_Stereo_01.wav" id="11_huynm"]
+[ext_resource type="AudioStream" uid="uid://cl3p4ymrruh5e" path="res://assets/sfx/Crash_Hard-001.wav" id="12_lgfnn"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_h45xw"]
 size = Vector3(2.3, 1, 7)
@@ -74,14 +79,28 @@ albedo_texture = ExtResource("7_pxc0n")
 emission_enabled = true
 emission = Color(1, 0, 0, 1)
 
-[node name="Car" type="VehicleBody3D" unique_id=647421816 node_paths=PackedStringArray("door_interactable", "in_car_point", "fuel_anim")]
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_huynm"]
+random_pitch = 1.7817973
+random_volume_offset_db = 5.0
+streams_count = 1
+stream_0/stream = ExtResource("12_lgfnn")
+
+[node name="Car" type="VehicleBody3D" unique_id=647421816 node_paths=PackedStringArray("door_interactable", "in_car_point", "fuel_anim", "door_sound", "engine_sound_ext", "engine_sound_int", "drive_sound", "crash_sound")]
 mass = 1000.0
+contact_monitor = true
+max_contacts_reported = 1
 angular_damp = 0.1
 script = ExtResource("1_qmbs7")
 door_interactable = NodePath("DoorInteractable")
 in_car_point = NodePath("InCarPoint")
 fuel_anim = NodePath("FuelAnim")
+door_sound = NodePath("DoorSound")
+engine_sound_ext = NodePath("EngineSoundExterior")
+engine_sound_int = NodePath("EngineSoundInterior")
+drive_sound = NodePath("DriveSound")
+crash_sound = NodePath("Crash")
 ENGINE_POWER = 1500.0
+fuel = 0.6
 
 [node name="Model" parent="." unique_id=1305624427 instance=ExtResource("1_s02si")]
 
@@ -136,7 +155,7 @@ use_as_traction = true
 wheel_radius = 0.35
 wheel_friction_slip = 50.0
 suspension_travel = 0.1
-suspension_stiffness = 1000.0
+suspension_stiffness = 250.0
 suspension_max_force = 24000.0
 damping_compression = 1.9
 damping_relaxation = 2.0
@@ -147,7 +166,7 @@ use_as_traction = true
 wheel_radius = 0.35
 wheel_friction_slip = 50.0
 suspension_travel = 0.1
-suspension_stiffness = 1000.0
+suspension_stiffness = 250.0
 suspension_max_force = 24000.0
 damping_compression = 1.9
 damping_relaxation = 2.0
@@ -158,7 +177,7 @@ use_as_steering = true
 wheel_radius = 0.35
 wheel_friction_slip = 50.0
 suspension_travel = 0.1
-suspension_stiffness = 1000.0
+suspension_stiffness = 250.0
 suspension_max_force = 24000.0
 damping_compression = 1.9
 damping_relaxation = 2.0
@@ -169,7 +188,7 @@ use_as_steering = true
 wheel_radius = 0.35
 wheel_friction_slip = 50.0
 suspension_travel = 0.1
-suspension_stiffness = 1000.0
+suspension_stiffness = 250.0
 suspension_max_force = 24000.0
 damping_compression = 1.9
 damping_relaxation = 2.0
@@ -233,6 +252,35 @@ transform = Transform3D(-0.8363689, 0.5481666, 1.509958e-07, 0.54816645, 0.83636
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.009473458, 0.06570339, 0)
 material_override = SubResource("StandardMaterial3D_ntmdn")
 mesh = SubResource("QuadMesh_h45xw")
+
+[node name="DoorSound" type="AudioStreamPlayer3D" parent="." unique_id=1046285759]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.2123022, 0.5446641, 0.6480918)
+stream = ExtResource("8_ntmdn")
+volume_db = 10.0
+
+[node name="EngineSoundExterior" type="AudioStreamPlayer3D" parent="." unique_id=1187930105]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -2)
+stream = ExtResource("9_u7wjx")
+volume_db = -20.0
+autoplay = true
+max_distance = 20.0
+
+[node name="EngineSoundInterior" type="AudioStreamPlayer3D" parent="." unique_id=1040228096]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -2)
+stream = ExtResource("10_upvvj")
+volume_db = -15.0
+autoplay = true
+
+[node name="DriveSound" type="AudioStreamPlayer3D" parent="." unique_id=469141354]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -2)
+stream = ExtResource("11_huynm")
+volume_db = -15.0
+autoplay = true
+
+[node name="Crash" type="AudioStreamPlayer3D" parent="." unique_id=1645003829]
+stream = SubResource("AudioStreamRandomizer_huynm")
+volume_db = -27.0
+pitch_scale = 2.0
 
 [editable path="Model"]
 [editable path="LightCone"]

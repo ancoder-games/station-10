@@ -4,6 +4,11 @@ extends VehicleBody3D
 @export var door_interactable: InteractableComponent
 @export var in_car_point: Node3D
 @export var fuel_anim: AnimationPlayer
+@export var door_sound: AudioStreamPlayer3D
+@export var engine_sound_ext: AudioStreamPlayer3D
+@export var engine_sound_int: AudioStreamPlayer3D
+@export var drive_sound: AudioStreamPlayer3D
+@export var crash_sound: AudioStreamPlayer3D
 
 @export var stabilization_force: float = 50.0
 @export var MAX_STEER: float = 0.1
@@ -14,12 +19,14 @@ extends VehicleBody3D
 		if value <= 0:
 			fuel = 0
 			fuel_out = true
-			Global.player.subtitle("You", "I ran out of fuel!")
+			Global.player.subtitle("You", "I ran out of gas!")
 		else:
 			fuel = value
 			fuel_out = false
 
 var fuel_out: bool = false
+
+var last_velocity: Vector3 = Vector3.ZERO
 
 func _ready() -> void:
 	door_interactable.interacted.connect(_door_interacted)
@@ -31,8 +38,10 @@ func _ready() -> void:
 		# _player.arms_anim.stop()
 		_player.arms_anim.play_backwards("Collect_something")
 		)
+	body_entered.connect(_on_body_entered)
 
 func _physics_process(delta: float) -> void:
+	last_velocity = linear_velocity
 	fuel_anim.play("default")
 	fuel_anim.seek(maxf(0.1, 0.9 - fuel))
 	if player != null:
@@ -42,13 +51,18 @@ func _physics_process(delta: float) -> void:
 			var engine_input: float = Input.get_axis("backward", "forward")
 			engine_force = engine_input * ENGINE_POWER
 			if engine_input != 0:
+				drive_sound.play()
 				fuel -= 0.025 * delta
+			else:
+				drive_sound.stop()
 		else:
+			drive_sound.stop()
 			brake = 50
 			engine_force = 0
 
 		player.global_position = in_car_point.global_position
 	else:
+		drive_sound.stop()
 		engine_force = 0
 		brake = 50
 
@@ -63,11 +77,16 @@ func _physics_process(delta: float) -> void:
 
 
 func _door_interacted(_player: Player) -> void:
+	door_sound.play()
 	if player == null:
 		player = _player
 		player.enabled = false
 		door_interactable.label = "Exit Car"
 		player.global_rotation.y = in_car_point.global_rotation.y
+
+		engine_sound_ext.stop()
+		engine_sound_int.play()
+		player.ambience.stream_paused = true
 
 		# Stop Crouch
 		if player.movement_comp.crouching:
@@ -75,6 +94,15 @@ func _door_interacted(_player: Player) -> void:
 			player.crouch_anim.play("uncrouch")
 			player.crouch_anim.seek(0.3)
 	else:
+		engine_sound_int.stop()
+		engine_sound_ext.play()
+		player.ambience.stream_paused = false
 		player.enabled = true
 		player = null
 		door_interactable.label = "Enter Car"
+
+func _on_body_entered(body: Node) -> void:
+	var impact_strength: float = (last_velocity - linear_velocity).length()
+	if impact_strength > 0.2:
+		crash_sound.pitch_scale = clampf(impact_strength / 20.0, 0.8, 1.2)
+		crash_sound.play()

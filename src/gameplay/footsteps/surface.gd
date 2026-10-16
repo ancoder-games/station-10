@@ -20,24 +20,24 @@ func _load_footstep_sounds() -> void:
 
 	var walk_files: Array = DirAccess.open(_footstep_walk_folder).get_files()
 	for file_name: String in walk_files:
-		if file_name.get_extension().to_lower() != "ogg":
+		if file_name.get_extension().to_lower() != "wav":
 			continue
-		var stream: AudioStreamOggVorbis = load(_footstep_walk_folder + "/" + file_name)
+		var stream: AudioStreamWAV = load(_footstep_walk_folder + "/" + file_name)
 		if stream:
 			footstep_walk.add_stream(0, stream)
 
 	var jump_files: Array = DirAccess.open(_footstep_jump_folder).get_files()
 	for file_name: String in jump_files:
-		if file_name.get_extension().to_lower() != "ogg":
+		if file_name.get_extension().to_lower() != "wav":
 			continue
-		var stream: AudioStreamOggVorbis = load(_footstep_jump_folder + "/" + file_name)
+		var stream: AudioStreamWAV = load(_footstep_jump_folder + "/" + file_name)
 		if stream:
 			footstep_jump.add_stream(0, stream)
 
 	var sprint_files: Array = DirAccess.open(_footstep_sprint_folder).get_files()
 	for file_name: String in sprint_files:
-		if file_name.get_extension().to_lower() != "ogg":
+		if file_name.get_extension().to_lower() != "wav":
 			continue
-		var stream: AudioStreamOggVorbis = load(_footstep_sprint_folder + "/" + file_name)
+		var stream: AudioStreamWAV = load(_footstep_sprint_folder + "/" + file_name)
 		if stream:
 			footstep_sprint.add_stream(0, stream)

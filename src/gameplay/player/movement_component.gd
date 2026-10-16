@@ -94,7 +94,7 @@ func _head_bob(time: float) -> Vector3:
 	headbob_position.y = sin(time * headbob_frequency) * headbob_amplitude
 	headbob_position.x = sin(time * headbob_frequency / 2) * headbob_amplitude
 
-	var footstep_threshold: float = - headbob_amplitude + 0.002
+	var footstep_threshold: float = - headbob_amplitude + 0.0005
 	if headbob_position.y > footstep_threshold:
 		_footstep_can_play = true
 	elif headbob_position.y < footstep_threshold and _footstep_can_play:
@@ -108,9 +108,9 @@ func play_stream(stream: AudioStream) -> void:
 	if not stream:
 		return
 	if crouching:
-		footstep_player.volume_db = -25
+		footstep_player.volume_db = -15
 	else:
-		footstep_player.volume_db = -20
+		footstep_player.volume_db = -10
 
 	if footstep_player.stream != stream:
 		footstep_player.stream = stream
