@@ -1,0 +1,15 @@
+[gd_resource type="ShaderMaterial" format=3 uid="uid://bygjxpoadl6u"]
+
+[ext_resource type="Shader" uid="uid://5yby351yp2se" path="res://assets/shaders/retro_object.gdshader" id="1_3die8"]
+[ext_resource type="Texture2D" uid="uid://c2nnjoosie1fq" path="res://assets/textures/car_texture.png" id="2_6twlw"]
+[ext_resource type="Texture2D" uid="uid://dsf4h2e0umhmv" path="res://assets/textures/car_emissive.png" id="3_ycpot"]
+
+[resource]
+resource_name = "arms"
+render_priority = 0
+shader = ExtResource("1_3die8")
+shader_parameter/color_texture = ExtResource("2_6twlw")
+shader_parameter/emission_texture = ExtResource("3_ycpot")
+shader_parameter/emission_strength = 15.999999642368
+shader_parameter/vertex_wobble = 1.0
+shader_parameter/affine_mapping = 1.0

@@ -1,0 +1,11 @@
+[gd_resource type="ShaderMaterial" format=3 uid="uid://bvk5nxkygtnao"]
+
+[ext_resource type="Shader" uid="uid://5yby351yp2se" path="res://assets/shaders/retro_object.gdshader" id="1_76y6h"]
+
+[resource]
+resource_name = "arms"
+render_priority = 0
+shader = ExtResource("1_76y6h")
+shader_parameter/emission_strength = 0.0
+shader_parameter/vertex_wobble = 1.0
+shader_parameter/affine_mapping = 1.0

@@ -1,6 +1,78 @@
 [gd_scene format=3 uid="uid://bab4p2kybglsp"]
 
 [ext_resource type="Script" uid="uid://cem07vlayo1jy" path="res://src/core/main/main.gd" id="1_6t2ow"]
+[ext_resource type="Texture2D" uid="uid://dwjo13t0kmh46" path="res://assets/textures/night_sky.jpg" id="2_tif62"]
+[ext_resource type="Shader" uid="uid://cl2yej1achkeh" path="res://assets/shaders/retro_post.gdshader" id="3_5fl30"]
+[ext_resource type="PackedScene" uid="uid://ckxjw2b0meu4t" path="res://src/gameplay/player/player.tscn" id="3_tif62"]
+[ext_resource type="PackedScene" uid="uid://cbu0qdty51cof" path="res://src/gameplay/car/car.tscn" id="5_yfg2f"]
+[ext_resource type="Texture2D" uid="uid://dhxg4i6slw1ee" path="res://assets/textures/road.png" id="6_ijhwt"]
+[ext_resource type="PackedScene" uid="uid://bghogcciwwt1w" path="res://assets/models/guardrail_by_dani.fbx" id="7_hnitr"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_5fl30"]
+render_priority = 0
+shader = ExtResource("3_5fl30")
+shader_parameter/dither_amount = 0.5
+
+[sub_resource type="QuadMesh" id="QuadMesh_h45xw"]
+flip_faces = true
+size = Vector2(2, 2)
+
+[sub_resource type="PanoramaSkyMaterial" id="PanoramaSkyMaterial_yfg2f"]
+panorama = ExtResource("2_tif62")
+
+[sub_resource type="Sky" id="Sky_tif62"]
+sky_material = SubResource("PanoramaSkyMaterial_yfg2f")
+
+[sub_resource type="Environment" id="Environment_5fl30"]
+background_mode = 2
+sky = SubResource("Sky_tif62")
+tonemap_agx_contrast = 2.0
+glow_enabled = true
+glow_bloom = 0.8
+fog_light_color = Color(0.65362, 0.68431395, 0.7325258, 1)
+
+[sub_resource type="WorldBoundaryShape3D" id="WorldBoundaryShape3D_h45xw"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_hnitr"]
+albedo_texture = ExtResource("6_ijhwt")
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_h45xw"]
+size = Vector2(15, 15)
 
 [node name="Main" type="Node" unique_id=1437717578]
 script = ExtResource("1_6t2ow")
+
+[node name="PostProcess" type="MeshInstance3D" parent="." unique_id=1219033675]
+material_override = SubResource("ShaderMaterial_5fl30")
+extra_cull_margin = 16384.0
+mesh = SubResource("QuadMesh_h45xw")
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=947098418]
+environment = SubResource("Environment_5fl30")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="." unique_id=337253324]
+transform = Transform3D(-0.8660254, -0.43301278, 0.25, 0, 0.49999997, 0.86602545, -0.50000006, 0.75, -0.43301266, 0, 0, 0)
+light_energy = 0.5
+shadow_enabled = true
+shadow_opacity = 0.5
+shadow_blur = 2.0
+
+[node name="Player" parent="." unique_id=2101383689 instance=ExtResource("3_tif62")]
+
+[node name="Car" parent="." unique_id=647421816 instance=ExtResource("5_yfg2f")]
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 5.5471735, 2.2235482, 0)
+
+[node name="StaticBody3D" type="StaticBody3D" parent="." unique_id=805912533]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D" unique_id=1915910145]
+shape = SubResource("WorldBoundaryShape3D_h45xw")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=1215351403]
+material_override = SubResource("StandardMaterial3D_hnitr")
+mesh = SubResource("PlaneMesh_h45xw")
+
+[node name="Guardrail" parent="." unique_id=485062515 instance=ExtResource("7_hnitr")]
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, -0.7040415, -0.42126155, 6.726591)
+
+[node name="Guardrail2" parent="." unique_id=631159366 instance=ExtResource("7_hnitr")]
+transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, -0.7040415, -0.42126155, -6.8316917)

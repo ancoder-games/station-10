@@ -1,0 +1,411 @@
+[gd_scene format=3 uid="uid://ckxjw2b0meu4t"]
+
+[ext_resource type="Script" uid="uid://b2in34k04gyry" path="res://src/gameplay/player/player.gd" id="1_kh5p4"]
+[ext_resource type="Script" uid="uid://bqtp61yr5d4qe" path="res://src/gameplay/player/movement_component.gd" id="2_k2146"]
+[ext_resource type="Script" uid="uid://8d50vj73xfol" path="res://src/gameplay/player/camera_control_component.gd" id="3_sjr3t"]
+[ext_resource type="PackedScene" uid="uid://dkfriifyw5do8" path="res://assets/models/arms.glb" id="4_sjr3t"]
+[ext_resource type="Texture2D" uid="uid://kyj07b0gqcug" path="res://assets/textures/progress.png" id="5_d3trc"]
+[ext_resource type="Script" uid="uid://dhmsc0na5tejl" path="res://src/gameplay/animations/fps_limiter.gd" id="5_dxsvo"]
+[ext_resource type="Texture2D" uid="uid://ch8wy24ixt48l" path="res://assets/textures/crosshair.png" id="6_uia4o"]
+[ext_resource type="FontFile" uid="uid://cpx03qg66oxi0" path="res://assets/ui/fonts/PixelPublic/PublicPixel.ttf" id="7_kjyqo"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_h45xw"]
+radius = 0.25
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_k2146"]
+radius = 0.25
+height = 1.0002441
+
+[sub_resource type="LabelSettings" id="LabelSettings_kjyqo"]
+font = ExtResource("7_kjyqo")
+font_size = 17
+
+[sub_resource type="Animation" id="Animation_as852"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("CollisionShape3D:disabled")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("CrouchShape3D:disabled")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Head:position")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(0, 1.75, 0)]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("CrouchCast:enabled")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+
+[sub_resource type="Animation" id="Animation_e5sg8"]
+resource_name = "crouch"
+length = 0.3
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("CollisionShape3D:disabled")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("CrouchShape3D:disabled")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Head:position")
+tracks/2/interp = 2
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.29000002),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector3(0, 1.75, 0), Vector3(0, 1, 0)]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("CrouchCast:enabled")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+
+[sub_resource type="Animation" id="Animation_7jatv"]
+resource_name = "uncrouch"
+length = 0.3
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("CollisionShape3D:disabled")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("CrouchShape3D:disabled")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Head:position")
+tracks/2/interp = 2
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.3),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector3(0, 1, 0), Vector3(0, 1.75, 0)]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("CrouchCast:enabled")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_d3trc"]
+_data = {
+&"RESET": SubResource("Animation_as852"),
+&"crouch": SubResource("Animation_e5sg8"),
+&"uncrouch": SubResource("Animation_7jatv")
+}
+
+[node name="Player" type="CharacterBody3D" unique_id=2101383689 node_paths=PackedStringArray("movement_comp", "camera_control_comp", "crouch_anim", "arms_anim", "head", "item_placement", "interaction_cast", "crouch_cast", "interact_progress", "interact_text", "crosshair_center", "subtitles_container")]
+collision_layer = 2
+script = ExtResource("1_kh5p4")
+movement_comp = NodePath("MovementComponent")
+camera_control_comp = NodePath("CameraControlComponent")
+crouch_anim = NodePath("CrouchAnim")
+arms_anim = NodePath("Head/Arms/AnimationPlayer")
+head = NodePath("Head")
+item_placement = NodePath("Head/Arms/arms_armature/Skeleton3D/ItemPlacement")
+interaction_cast = NodePath("Head/InteractionCast")
+crouch_cast = NodePath("CrouchCast")
+interact_progress = NodePath("HUD/CenterContainer/InteractionProgress")
+interact_text = NodePath("HUD/CenterContainer/MarginContainer/InteractionText")
+crosshair_center = NodePath("HUD/Crosshair")
+subtitles_container = NodePath("HUD/MarginContainer/Subtitles")
+
+[node name="MovementComponent" type="Node" parent="." unique_id=1029400876 node_paths=PackedStringArray("body", "footstep_player", "surface_ray", "camera")]
+script = ExtResource("2_k2146")
+body = NodePath("..")
+jump_power = 3.5
+speed = 4.0
+speed_sprinting = 7.0
+speed_crouching = 1.0
+footstep_player = NodePath("../SurfaceCast/Footsteps")
+surface_ray = NodePath("../SurfaceCast")
+camera = NodePath("../Head/Camera3D")
+metadata/_custom_type_script = "uid://bqtp61yr5d4qe"
+
+[node name="CameraControlComponent" type="Node" parent="." unique_id=128654927 node_paths=PackedStringArray("x_axis_control", "y_axis_control")]
+script = ExtResource("3_sjr3t")
+x_axis_control = NodePath("..")
+y_axis_control = NodePath("../Head")
+metadata/_custom_type_script = "uid://8d50vj73xfol"
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=2049656764]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+shape = SubResource("CapsuleShape3D_h45xw")
+
+[node name="CrouchCast" type="RayCast3D" parent="." unique_id=978644096]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.00012207031, 0)
+enabled = false
+target_position = Vector3(0, 1.15, 0)
+
+[node name="CrouchShape3D" type="CollisionShape3D" parent="." unique_id=1839458113]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5001221, 0)
+shape = SubResource("CapsuleShape3D_k2146")
+disabled = true
+
+[node name="Head" type="Node3D" parent="." unique_id=705594509]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.75, 0)
+
+[node name="Camera3D" type="Camera3D" parent="Head" unique_id=376493427]
+
+[node name="InteractionCast" type="RayCast3D" parent="Head" unique_id=1205313030]
+target_position = Vector3(0, 0, -2)
+collide_with_areas = true
+collide_with_bodies = false
+
+[node name="Arms" parent="Head" unique_id=1086687630 instance=ExtResource("4_sjr3t")]
+
+[node name="arms_armature" parent="Head/Arms" index="0" unique_id=58681986]
+transform = Transform3D(1, 0, 2.3841858e-07, 0, 1, 0, -2.3841858e-07, 0, 1, 0, -1.75, 0)
+
+[node name="Skeleton3D" parent="Head/Arms/arms_armature" index="0" unique_id=667023245]
+transform = Transform3D(-1, 0, 8.742278e-08, 0, 1, 0, -8.742278e-08, 0, -1, 0, 0, 0)
+bones/2/rotation = Quaternion(-0.55994767, -0.41408297, -0.28751168, 0.6575188)
+bones/3/rotation = Quaternion(0.29422298, 0.6930231, -0.6202026, 0.22022876)
+bones/4/rotation = Quaternion(0.52540267, -0.16116646, 0.6627708, 0.5086378)
+bones/5/rotation = Quaternion(-0.55994767, 0.41408297, 0.28751168, 0.6575188)
+bones/6/rotation = Quaternion(0.294223, -0.693023, 0.62020254, 0.22022878)
+bones/7/rotation = Quaternion(0.5254027, 0.16116652, -0.66277087, 0.5086376)
+bones/8/position = Vector3(0.2399272, 1.648482, 0.26480293)
+bones/8/rotation = Quaternion(-0.45746797, -0.82200915, 0.05595872, 0.33450368)
+bones/9/position = Vector3(2.4391954e-07, -2.8796787e-09, -6.700257e-08)
+bones/9/rotation = Quaternion(-0.012828205, 0.015589105, -0.70825285, 0.7056701)
+bones/10/rotation = Quaternion(0.10666566, 0.75704443, -0.027616726, 0.6440057)
+bones/11/position = Vector3(-1.2421178e-08, 0.056967355, 2.2578074e-07)
+bones/11/rotation = Quaternion(0.60752374, -0.033563584, -0.03096262, 0.79298794)
+bones/12/rotation = Quaternion(0.5566894, -0.0046099615, 0.032845415, 0.8300584)
+bones/13/rotation = Quaternion(0.67328906, 0.026676845, -0.011441766, 0.73880935)
+bones/14/rotation = Quaternion(0.044570643, 0.5354726, 0.32832012, 0.7768452)
+bones/15/rotation = Quaternion(0.3230552, -0.017376477, 0.0032523233, 0.94621503)
+bones/16/rotation = Quaternion(0.49069327, -0.020474816, 0.0045331256, 0.87108)
+bones/17/rotation = Quaternion(0.04904612, 0.6907543, -0.07184111, 0.71783835)
+bones/18/position = Vector3(1.8352551e-09, 0.055626243, 1.9377767e-07)
+bones/18/rotation = Quaternion(0.5745632, 0.013733508, -0.0066401996, 0.81831807)
+bones/19/rotation = Quaternion(0.54511946, -0.014298866, 0.01441659, 0.8381125)
+bones/20/rotation = Quaternion(0.67787695, -0.013888444, 0.015856804, 0.7348731)
+bones/21/rotation = Quaternion(0.0015105742, 0.67867076, -0.0964992, 0.728074)
+bones/22/position = Vector3(-1.14938405e-08, 0.05632973, 7.52008e-08)
+bones/22/rotation = Quaternion(0.60117763, 0.024409117, 0.002251988, 0.7987393)
+bones/23/rotation = Quaternion(0.53453314, 0.0028319939, 0.022447072, 0.84484464)
+bones/24/rotation = Quaternion(0.6891228, -0.00026226768, 0.00022407851, 0.7246445)
+bones/25/rotation = Quaternion(-0.006985602, 0.6441195, -0.13416925, 0.7530338)
+bones/26/position = Vector3(-3.5104094e-08, 0.053812668, 1.8972077e-07)
+bones/26/rotation = Quaternion(0.6449016, 0.0057212817, 0.04361519, 0.76299864)
+bones/27/rotation = Quaternion(0.4957222, -0.010220471, -0.008660588, 0.8683778)
+bones/28/rotation = Quaternion(0.68762684, 0.0047241724, 0.0279202, 0.7255119)
+bones/29/position = Vector3(-0.2399272, 1.648482, 0.26480293)
+bones/29/rotation = Quaternion(-0.45746797, 0.82200915, -0.05595872, 0.33450368)
+bones/29/scale = Vector3(1, 0.99999994, 1.0000001)
+bones/30/position = Vector3(-9.614313e-08, -2.4817123e-08, -3.1321825e-08)
+bones/30/rotation = Quaternion(-0.012828204, -0.01558911, 0.70825285, 0.7056701)
+bones/31/position = Vector3(0.0054915827, 0.03965874, 0.02765492)
+bones/31/rotation = Quaternion(0.106665656, -0.75704443, 0.027616726, 0.6440057)
+bones/32/position = Vector3(-1.994881e-08, 0.056967217, 2.3170743e-07)
+bones/32/rotation = Quaternion(0.60752374, 0.033563573, 0.030962627, 0.79298794)
+bones/33/rotation = Quaternion(0.5566894, 0.0046099536, -0.032845393, 0.8300584)
+bones/34/rotation = Quaternion(0.67328906, -0.026676852, 0.011441758, 0.73880935)
+bones/35/rotation = Quaternion(0.044570643, -0.5354726, -0.32832012, 0.7768452)
+bones/36/rotation = Quaternion(0.3230552, 0.01737648, -0.0032523246, 0.94621503)
+bones/37/rotation = Quaternion(0.49069324, 0.020474821, -0.004533145, 0.8710801)
+bones/38/position = Vector3(0.008603817, 0.042856064, 0.007254309)
+bones/38/rotation = Quaternion(0.049046103, -0.6907543, 0.07184112, 0.71783835)
+bones/39/position = Vector3(-2.432797e-09, 0.05562622, 2.1013966e-07)
+bones/39/rotation = Quaternion(0.5745632, -0.013733515, 0.0066402107, 0.81831807)
+bones/40/rotation = Quaternion(0.54511946, 0.014298862, -0.014416596, 0.8381125)
+bones/41/rotation = Quaternion(0.6778769, 0.013888413, -0.015856836, 0.7348732)
+bones/42/position = Vector3(0.00786896, 0.04060299, -0.011136833)
+bones/42/rotation = Quaternion(0.0015105634, -0.67867076, 0.0964992, 0.728074)
+bones/43/position = Vector3(5.506342e-08, 0.05632973, 1.0660558e-07)
+bones/43/rotation = Quaternion(0.60117763, -0.024409099, -0.0022519992, 0.7987393)
+bones/44/rotation = Quaternion(0.5345332, -0.0028319766, -0.022447094, 0.8448446)
+bones/45/rotation = Quaternion(0.6891228, 0.00026227548, -0.00022411751, 0.7246445)
+bones/46/rotation = Quaternion(-0.006985635, -0.6441195, 0.13416922, 0.7530338)
+bones/47/position = Vector3(7.08304e-08, 0.05381275, 8.0821174e-08)
+bones/47/rotation = Quaternion(0.6449016, -0.005721266, -0.043615203, 0.76299864)
+bones/48/rotation = Quaternion(0.4957222, 0.010220483, 0.008660579, 0.8683778)
+bones/49/rotation = Quaternion(0.68762684, -0.004724157, -0.027920187, 0.7255119)
+
+[node name="ItemPlacement" type="BoneAttachment3D" parent="Head/Arms/arms_armature/Skeleton3D" index="1" unique_id=1830271163]
+transform = Transform3D(-0.7110019, 0.3357655, 0.6178492, 0.57894003, 0.77822214, 0.24330752, -0.39912963, 0.53068984, -0.74770564, -0.23992717, 1.648482, 0.26480302)
+bone_name = "hand.R"
+bone_idx = 30
+
+[node name="AnimationPlayer" parent="Head/Arms" index="1" unique_id=1002295814]
+script = ExtResource("5_dxsvo")
+fps = 24
+
+[node name="SurfaceCast" type="RayCast3D" parent="." unique_id=573479677]
+target_position = Vector3(0, -0.5, 0)
+hit_from_inside = true
+
+[node name="Footsteps" type="AudioStreamPlayer3D" parent="SurfaceCast" unique_id=306018507]
+volume_db = -20.0
+
+[node name="HUD" type="CanvasLayer" parent="." unique_id=1383222394]
+
+[node name="Crosshair" type="TextureRect" parent="HUD" unique_id=717055482]
+custom_minimum_size = Vector2(15, 15)
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -7.5
+offset_top = -7.5
+offset_right = 7.5
+offset_bottom = 7.5
+grow_horizontal = 2
+grow_vertical = 2
+pivot_offset_ratio = Vector2(0.5, 0.5)
+texture = ExtResource("6_uia4o")
+
+[node name="CenterContainer" type="CenterContainer" parent="HUD" unique_id=1995334742]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -68.0
+offset_top = -43.5
+offset_right = 68.0
+offset_bottom = 43.5
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="InteractionProgress" type="TextureProgressBar" parent="HUD/CenterContainer" unique_id=1288956226]
+custom_minimum_size = Vector2(25, 25)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+value = 30.0
+fill_mode = 4
+nine_patch_stretch = true
+texture_under = ExtResource("5_d3trc")
+texture_progress = ExtResource("5_d3trc")
+tint_under = Color(0.22745098, 0.22745098, 0.22745098, 0.43529412)
+
+[node name="MarginContainer" type="MarginContainer" parent="HUD/CenterContainer" unique_id=1325272311]
+layout_mode = 2
+theme_override_constants/margin_bottom = 70
+
+[node name="InteractionText" type="Label" parent="HUD/CenterContainer/MarginContainer" unique_id=185667133]
+layout_mode = 2
+text = "Interact"
+label_settings = SubResource("LabelSettings_kjyqo")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="MarginContainer" type="MarginContainer" parent="HUD" unique_id=1776640206]
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -20.0
+offset_top = -40.0
+offset_right = 20.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_constants/margin_bottom = 30
+
+[node name="Subtitles" type="VBoxContainer" parent="HUD/MarginContainer" unique_id=159716810]
+layout_mode = 2
+
+[node name="CrouchAnim" type="AnimationPlayer" parent="." unique_id=846935674]
+libraries/ = SubResource("AnimationLibrary_d3trc")
+script = ExtResource("5_dxsvo")
+fps = 24
+
+[node name="RightArmIK" type="Node3D" parent="." unique_id=1320512028]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.123417586, 1.2054038, -0.3011047)
+
+[node name="LeftArmIK" type="Node3D" parent="." unique_id=1629298910]
+
+[editable path="Head/Arms"]

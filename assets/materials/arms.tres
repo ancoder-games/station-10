@@ -1,0 +1,12 @@
+[gd_resource type="ShaderMaterial" format=3 uid="uid://cg7ck3f8q3vj5"]
+
+[ext_resource type="Shader" uid="uid://5yby351yp2se" path="res://assets/shaders/retro_object.gdshader" id="1_3ojol"]
+[ext_resource type="Texture2D" uid="uid://cajsvpmq034l7" path="res://assets/textures/arms.png" id="1_5bc5p"]
+
+[resource]
+resource_name = "arms"
+render_priority = 0
+shader = ExtResource("1_3ojol")
+shader_parameter/color_texture = ExtResource("1_5bc5p")
+shader_parameter/vertex_wobble = 1.0
+shader_parameter/affine_mapping = 1.0

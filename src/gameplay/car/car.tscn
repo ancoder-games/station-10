@@ -1,0 +1,239 @@
+[gd_scene format=3 uid="uid://cbu0qdty51cof"]
+
+[ext_resource type="Script" uid="uid://cly03gxxv7iw1" path="res://src/gameplay/car/car.gd" id="1_qmbs7"]
+[ext_resource type="PackedScene" uid="uid://bocl28t6nsyeb" path="res://assets/models/Car.fbx" id="1_s02si"]
+[ext_resource type="PackedScene" uid="uid://ceml0b2l5femf" path="res://assets/models/light_cone.fbx" id="2_xxa7e"]
+[ext_resource type="Texture2D" uid="uid://dmfuoi7jc51ts" path="res://assets/textures/light_gradient.png" id="3_qr0wb"]
+[ext_resource type="Script" uid="uid://bgvwpw0l60rgh" path="res://src/gameplay/interactable/interactable_component.gd" id="5_ivtvr"]
+[ext_resource type="Texture2D" uid="uid://bnbbk851nlu82" path="res://assets/textures/gas_meter.png" id="6_j7mmk"]
+[ext_resource type="Texture2D" uid="uid://lo70n331wirr" path="res://assets/textures/gas_meter_hand.png" id="7_pxc0n"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_h45xw"]
+size = Vector3(2.3, 1, 7)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_qmbs7"]
+resource_name = "Material.001"
+render_priority = 1
+transparency = 4
+shading_mode = 0
+vertex_color_use_as_albedo = true
+albedo_color = Color(1, 1, 1, 0.11372549)
+albedo_texture = ExtResource("3_qr0wb")
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_0o143"]
+size = Vector3(0.20019531, 1.6274414, 1.4398193)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_pxc0n"]
+transparency = 1
+albedo_texture = ExtResource("6_j7mmk")
+emission_enabled = true
+emission = Color(1, 1, 1, 1)
+
+[sub_resource type="QuadMesh" id="QuadMesh_h45xw"]
+size = Vector2(0.6, 0.2)
+
+[sub_resource type="Animation" id="Animation_pxc0n"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:rotation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(-1.9900703e-08, 3.1415925, 0.58017063)]
+}
+
+[sub_resource type="Animation" id="Animation_ntmdn"]
+resource_name = "default"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:rotation")
+tracks/0/interp = 2
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector3(0, 3.1415927, -1.9512781), Vector3(-1.9900703e-08, 3.1415925, 0.58017063)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_u7wjx"]
+_data = {
+&"RESET": SubResource("Animation_pxc0n"),
+&"default": SubResource("Animation_ntmdn")
+}
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ntmdn"]
+transparency = 1
+albedo_texture = ExtResource("7_pxc0n")
+emission_enabled = true
+emission = Color(1, 0, 0, 1)
+
+[node name="Car" type="VehicleBody3D" unique_id=647421816 node_paths=PackedStringArray("door_interactable", "in_car_point", "fuel_anim")]
+mass = 1000.0
+angular_damp = 0.1
+script = ExtResource("1_qmbs7")
+door_interactable = NodePath("DoorInteractable")
+in_car_point = NodePath("InCarPoint")
+fuel_anim = NodePath("FuelAnim")
+ENGINE_POWER = 1500.0
+
+[node name="Model" parent="." unique_id=1305624427 instance=ExtResource("1_s02si")]
+
+[node name="L_Tire_front" parent="Model" index="0" unique_id=825981646]
+transform = Transform3D(0, 0, 100, -97.545265, 22.020985, 0, -22.020985, -97.545265, 0, 1.1039451, -0.41524243, 1.9873085)
+
+[node name="Steering" parent="Model" index="1" unique_id=1912996211]
+transform = Transform3D(-100, 4.4728684e-05, 3.7566395e-05, 5.6425983e-05, 90.59781, 42.332455, -1.5099578e-05, 42.332455, -90.597824, 0.51085144, 0.54236996, 1.6077297)
+
+[node name="Steering" parent="Model/Steering" index="0" unique_id=2027325508]
+transform = Transform3D(1, 4.973799e-14, 4.2632564e-13, 4.2632564e-14, 1, -5.9604645e-08, 4.1495696e-12, 0, 1, -0.0013307002, -0.0046136365, 0.0048095686)
+
+[node name="L_Door_Front" parent="Model" index="2" unique_id=818437912]
+transform = Transform3D(100, 0, 0, 0, -2.3841858e-05, 99.99999, 0, -99.99999, -2.3841858e-05, 1.1658733, 0.28718215, 1.3483429)
+
+[node name="L_Door_Back" parent="Model" index="3" unique_id=724453437]
+transform = Transform3D(100, 0, 0, 0, -2.3841858e-05, 99.99999, 0, -99.99999, -2.3841858e-05, 1.1597832, 0.28640634, -0.11368561)
+
+[node name="car_hood" parent="Model" index="4" unique_id=679317888]
+transform = Transform3D(100, 0, 0, 0, -2.3841858e-05, 99.99999, 0, -99.99999, -2.3841858e-05, -0.012989402, 0.5524453, 1.6059132)
+
+[node name="trunk" parent="Model" index="5" unique_id=1424063393]
+transform = Transform3D(100, 0, 0, 0, -2.3841858e-05, 99.99999, 0, -99.99999, -2.3841858e-05, -0.014262915, 0.48166418, -2.0606003)
+
+[node name="R_Tire_Front" parent="Model" index="6" unique_id=1363531657]
+transform = Transform3D(0, 0, 100, -97.545265, 22.020985, 0, -22.020985, -97.545265, 0, 1.1039451, -0.41524243, 1.9873085)
+
+[node name="L_Tire_Back" parent="Model" index="7" unique_id=1022378495]
+transform = Transform3D(0, 0, 100, -97.545265, 22.020985, 0, -22.020985, -97.545265, 0, 1.1039451, -0.41524243, 2.093771)
+
+[node name="R_Tire_Back" parent="Model" index="8" unique_id=498227707]
+transform = Transform3D(0, 0, 100, -97.545265, 22.020985, 0, -22.020985, -97.545265, 0, 1.1039451, -0.41524243, 2.093771)
+
+[node name="Car_Base" parent="Model" index="9" unique_id=382484324]
+transform = Transform3D(100, 0, 0, 0, -2.3841858e-05, 99.99999, 0, -99.99999, -2.3841858e-05, -0.012363717, 0.14391084, 0.07424927)
+
+[node name="R_Door_Front" parent="Model" index="10" unique_id=962372493]
+transform = Transform3D(100, 0, 0, 0, -2.3841858e-05, 99.99999, 0, -99.99999, -2.3841858e-05, -1.1906008, 0.28718215, 1.3483429)
+
+[node name="R_Door_Back" parent="Model" index="11" unique_id=53090704]
+transform = Transform3D(100, 0, 0, 0, -2.3841858e-05, 99.99999, 0, -99.99999, -2.3841858e-05, -1.1845104, 0.28640634, -0.11368561)
+
+[node name="Car_Base_011" parent="Model" index="12" unique_id=523638311]
+transform = Transform3D(100, 0, 0, 0, -2.3841858e-05, 99.99999, 0, -99.99999, -2.3841858e-05, -0.012363717, 0.14391084, 0.07424927)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=794624789]
+shape = SubResource("BoxShape3D_h45xw")
+
+[node name="WBR" type="VehicleWheel3D" parent="." unique_id=510835913]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.3, -0.35, -2)
+use_as_traction = true
+wheel_radius = 0.35
+wheel_friction_slip = 50.0
+suspension_travel = 0.1
+suspension_stiffness = 1000.0
+suspension_max_force = 24000.0
+damping_compression = 1.9
+damping_relaxation = 2.0
+
+[node name="WBL" type="VehicleWheel3D" parent="." unique_id=1552579368]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.3, -0.35, -2)
+use_as_traction = true
+wheel_radius = 0.35
+wheel_friction_slip = 50.0
+suspension_travel = 0.1
+suspension_stiffness = 1000.0
+suspension_max_force = 24000.0
+damping_compression = 1.9
+damping_relaxation = 2.0
+
+[node name="WFR" type="VehicleWheel3D" parent="." unique_id=2075977753]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.3, -0.35, 2)
+use_as_steering = true
+wheel_radius = 0.35
+wheel_friction_slip = 50.0
+suspension_travel = 0.1
+suspension_stiffness = 1000.0
+suspension_max_force = 24000.0
+damping_compression = 1.9
+damping_relaxation = 2.0
+
+[node name="WFL" type="VehicleWheel3D" parent="." unique_id=520284964]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.3, -0.35, 2)
+use_as_steering = true
+wheel_radius = 0.35
+wheel_friction_slip = 50.0
+suspension_travel = 0.1
+suspension_stiffness = 1000.0
+suspension_max_force = 24000.0
+damping_compression = 1.9
+damping_relaxation = 2.0
+
+[node name="LightCone" parent="." unique_id=996375102 instance=ExtResource("2_xxa7e")]
+transform = Transform3D(1, 0, 0, 0, -4.371139e-08, 1, 0, -1, -4.371139e-08, -0.8246066, -0.018939793, 4.375211)
+
+[node name="Cone" parent="LightCone" index="0" unique_id=744463779]
+transform = Transform3D(100, 0, 0, 0, -4.3711384e-06, 200, 0, -99.99999, -8.742278e-06, 0, -1.0159497, -4.4703484e-08)
+surface_material_override/0 = SubResource("StandardMaterial3D_qmbs7")
+
+[node name="Cone_001" parent="LightCone" index="1" unique_id=750322162]
+transform = Transform3D(80, 0, 0, 0, -3.4969107e-06, 200, 0, -79.99999, -8.742278e-06, 0, -1.0159497, -4.4703484e-08)
+surface_material_override/0 = SubResource("StandardMaterial3D_qmbs7")
+
+[node name="SpotLight3D" type="SpotLight3D" parent="LightCone" unique_id=802896071]
+transform = Transform3D(1, 0, 0, 0, 1.39090695e-08, 1, 0, -1, 1.39090695e-08, 0, 1, 4.656613e-08)
+spot_angle = 14.577404
+
+[node name="LightCone2" parent="." unique_id=1892995827 instance=ExtResource("2_xxa7e")]
+transform = Transform3D(1, 0, 0, 0, -4.371139e-08, 1, 0, -1, -4.371139e-08, 0.8016105, -0.018939793, 4.375211)
+
+[node name="Cone" parent="LightCone2" index="0" unique_id=744463779]
+transform = Transform3D(100, 0, 0, 0, -4.3711384e-06, 200, 0, -99.99999, -8.742278e-06, 0, -1.0159497, -4.4703484e-08)
+surface_material_override/0 = SubResource("StandardMaterial3D_qmbs7")
+
+[node name="Cone_001" parent="LightCone2" index="1" unique_id=750322162]
+transform = Transform3D(80, 0, 0, 0, -3.4969107e-06, 200, 0, -79.99999, -8.742278e-06, 0, -1.0159497, -4.4703484e-08)
+surface_material_override/0 = SubResource("StandardMaterial3D_qmbs7")
+
+[node name="SpotLight3D" type="SpotLight3D" parent="LightCone2" unique_id=880507594]
+transform = Transform3D(1, 0, 0, 0, 1.39090695e-08, 1, 0, -1, 1.39090695e-08, 0, 1, 4.656613e-08)
+spot_angle = 14.577404
+
+[node name="InCarPoint" type="Node3D" parent="." unique_id=29712618]
+transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, 0.64381516, -0.6051266, 0.5192019)
+
+[node name="DoorInteractable" type="Area3D" parent="." unique_id=1245450229]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.93400407, 0, 0)
+script = ExtResource("5_ivtvr")
+label = "Enter Car"
+metadata/_custom_type_script = "uid://bgvwpw0l60rgh"
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="DoorInteractable" unique_id=2141679150]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.2812432, 0.62884617, 0.8099319)
+shape = SubResource("BoxShape3D_0o143")
+
+[node name="Meter" type="MeshInstance3D" parent="." unique_id=1939876446]
+transform = Transform3D(-1, 8.444391e-08, -2.2626686e-08, 7.5710346e-08, 0.9659259, 0.25881898, 4.3711385e-08, 0.25881898, -0.9659259, 0.16138697, 0.36065084, 1.0787374)
+material_override = SubResource("StandardMaterial3D_pxc0n")
+mesh = SubResource("QuadMesh_h45xw")
+
+[node name="FuelAnim" type="AnimationPlayer" parent="." unique_id=617178877]
+root_node = NodePath("../MeterHand")
+libraries/ = SubResource("AnimationLibrary_u7wjx")
+
+[node name="MeterHand" type="Marker3D" parent="." unique_id=255352895]
+transform = Transform3D(-0.8363689, 0.5481666, 1.509958e-07, 0.54816645, 0.83636904, 1.9900703e-08, -1.15379294e-07, 9.941518e-08, -1, 0.161, 0.27428105, 1.0628824)
+
+[node name="Hand" type="MeshInstance3D" parent="MeterHand" unique_id=1005521405]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.009473458, 0.06570339, 0)
+material_override = SubResource("StandardMaterial3D_ntmdn")
+mesh = SubResource("QuadMesh_h45xw")
+
+[editable path="Model"]
+[editable path="LightCone"]
+[editable path="LightCone2"]
