@@ -15,4 +15,5 @@ func _body_entered(body: Node) -> void:
 	Global.car.control = false
 	await get_tree().create_timer(2).timeout
 	anim.play("game_over")
+	Global.player.queue_free()
 	Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
