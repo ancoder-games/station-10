@@ -10,10 +10,14 @@ config_version=5
 
 [application]
 
-config/name="Halloween Horror"
+config/name="Road to Nowhere"
 run/main_scene="uid://bab4p2kybglsp"
 config/features=PackedStringArray("4.7")
 config/icon="res://icon.svg"
+
+[audio]
+
+buses/default_bus_layout="uid://dkk6kqm5157t7"
 
 [autoload]
 
@@ -37,7 +41,7 @@ window/stretch/aspect="expand"
 
 [editor_plugins]
 
-enabled=PackedStringArray("res://addons/godot_super-wakatime/plugin.cfg", "res://addons/log/plugin.cfg")
+enabled=PackedStringArray("res://addons/godot_super-wakatime/plugin.cfg", "res://addons/log/plugin.cfg", "res://addons/splash_screen_wizard/plugin.cfg")
 
 [input]
 
@@ -95,6 +99,7 @@ interact={
 [physics]
 
 3d/physics_engine="Jolt Physics"
+jolt_physics_3d/limits/world_boundary_shape_size=6000.0
 
 [rendering]
 

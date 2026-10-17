@@ -206,7 +206,8 @@ surface_material_override/0 = SubResource("StandardMaterial3D_qmbs7")
 
 [node name="SpotLight3D" type="SpotLight3D" parent="LightCone" unique_id=802896071]
 transform = Transform3D(1, 0, 0, 0, 1.39090695e-08, 1, 0, -1, 1.39090695e-08, 0, 1, 4.656613e-08)
-spot_angle = 14.577404
+spot_range = 10.0
+spot_angle = 20.0
 
 [node name="LightCone2" parent="." unique_id=1892995827 instance=ExtResource("2_xxa7e")]
 transform = Transform3D(1, 0, 0, 0, -4.371139e-08, 1, 0, -1, -4.371139e-08, 0.8016105, -0.018939793, 4.375211)
@@ -221,7 +222,8 @@ surface_material_override/0 = SubResource("StandardMaterial3D_qmbs7")
 
 [node name="SpotLight3D" type="SpotLight3D" parent="LightCone2" unique_id=880507594]
 transform = Transform3D(1, 0, 0, 0, 1.39090695e-08, 1, 0, -1, 1.39090695e-08, 0, 1, 4.656613e-08)
-spot_angle = 14.577404
+spot_range = 10.0
+spot_angle = 20.0
 
 [node name="InCarPoint" type="Node3D" parent="." unique_id=29712618]
 transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, 0.64381516, -0.6051266, 0.5192019)
@@ -256,7 +258,7 @@ mesh = SubResource("QuadMesh_h45xw")
 [node name="DoorSound" type="AudioStreamPlayer3D" parent="." unique_id=1046285759]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.2123022, 0.5446641, 0.6480918)
 stream = ExtResource("8_ntmdn")
-volume_db = 10.0
+volume_db = 80.0
 
 [node name="EngineSoundExterior" type="AudioStreamPlayer3D" parent="." unique_id=1187930105]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -2)
@@ -268,18 +270,17 @@ max_distance = 20.0
 [node name="EngineSoundInterior" type="AudioStreamPlayer3D" parent="." unique_id=1040228096]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -2)
 stream = ExtResource("10_upvvj")
-volume_db = -15.0
 autoplay = true
 
 [node name="DriveSound" type="AudioStreamPlayer3D" parent="." unique_id=469141354]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -2)
 stream = ExtResource("11_huynm")
-volume_db = -15.0
+volume_db = 10.0
 autoplay = true
 
 [node name="Crash" type="AudioStreamPlayer3D" parent="." unique_id=1645003829]
 stream = SubResource("AudioStreamRandomizer_huynm")
-volume_db = -27.0
+volume_db = -15.0
 pitch_scale = 2.0
 
 [editable path="Model"]

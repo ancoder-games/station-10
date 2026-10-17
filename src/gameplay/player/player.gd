@@ -32,8 +32,9 @@ func _exit_tree() -> void:
 	Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
 
 func _ready() -> void:
-	pass
-	
+	Global.add_queue("You", "Where am I?")
+	Global.add_queue("You", "I guess I'll drive forwards.")
+
 func _physics_process(delta: float) -> void:
 	if interaction_cast.is_colliding():
 		if interaction_cast.get_collider() is InteractableComponent:

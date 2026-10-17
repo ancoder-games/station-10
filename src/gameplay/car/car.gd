@@ -1,4 +1,5 @@
 extends VehicleBody3D
+class_name Car
 
 @export var player: Player
 @export var door_interactable: InteractableComponent
@@ -14,12 +15,15 @@ extends VehicleBody3D
 @export var MAX_STEER: float = 0.1
 @export var ENGINE_POWER: float = 100
 
+var control: bool = true
+
 @export var fuel: float = 1.0:
 	set(value):
 		if value <= 0:
 			fuel = 0
 			fuel_out = true
-			Global.player.subtitle("You", "I ran out of gas!")
+			Global.add_queue("You", "I ran out of gas.")
+			Global.add_queue("You", "Hey look a gas can ahead!")
 		else:
 			fuel = value
 			fuel_out = false
@@ -40,10 +44,17 @@ func _ready() -> void:
 		)
 	body_entered.connect(_on_body_entered)
 
+func _enter_tree() -> void:
+	Global.car = self
+
 func _physics_process(delta: float) -> void:
 	last_velocity = linear_velocity
 	fuel_anim.play("default")
 	fuel_anim.seek(maxf(0.1, 0.9 - fuel))
+	if !control:
+		engine_force = ENGINE_POWER
+		player.global_position = in_car_point.global_position
+		return
 	if player != null:
 		if !fuel_out:
 			brake = 0
@@ -52,7 +63,7 @@ func _physics_process(delta: float) -> void:
 			engine_force = engine_input * ENGINE_POWER
 			if engine_input != 0:
 				drive_sound.play()
-				fuel -= 0.025 * delta
+				fuel -= 0.0125 * delta
 			else:
 				drive_sound.stop()
 		else:
@@ -81,7 +92,7 @@ func _door_interacted(_player: Player) -> void:
 	if player == null:
 		player = _player
 		player.enabled = false
-		door_interactable.label = "Exit Car"
+		door_interactable.label = "(E) Exit Car"
 		player.global_rotation.y = in_car_point.global_rotation.y
 
 		engine_sound_ext.stop()
@@ -99,9 +110,9 @@ func _door_interacted(_player: Player) -> void:
 		player.ambience.stream_paused = false
 		player.enabled = true
 		player = null
-		door_interactable.label = "Enter Car"
+		door_interactable.label = "(E) Enter Car"
 
-func _on_body_entered(body: Node) -> void:
+func _on_body_entered(_body: Node) -> void:
 	var impact_strength: float = (last_velocity - linear_velocity).length()
 	if impact_strength > 0.2:
 		crash_sound.pitch_scale = clampf(impact_strength / 20.0, 0.8, 1.2)

@@ -4,11 +4,9 @@ var subtitle_colors: Dictionary[String, Color] = {
 	"You": Color("#c76b6b")
 }
 var player: Player
+var car: Car
 
 var subtitle_queue: Array[Dictionary] = []
-
-func _ready() -> void:
-	add_queue("You", "Hello... How are you?")
 
 var queue_timer: float = 0.0
 

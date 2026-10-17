@@ -1,0 +1,24 @@
+[gd_scene format=3 uid="uid://nv5k25sgnt0v"]
+
+[ext_resource type="Script" uid="uid://tdhmfkrx8mte" path="res://addons/splash_screen_wizard/splash_screen.gd" id="1_dlx7j"]
+
+[node name="Splash" type="Node" unique_id=483872107]
+
+[node name="SplashScreen" type="Control" parent="." unique_id=457113834]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_dlx7j")
+metadata/_custom_type_script = "uid://tdhmfkrx8mte"
+
+[node name="ColorRect" type="ColorRect" parent="SplashScreen" unique_id=2098890278]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 1)

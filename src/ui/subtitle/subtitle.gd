@@ -6,7 +6,7 @@ class_name Subtitle extends HBoxContainer
 @onready var sfx: AudioStreamPlayer = %SFX
 
 @export var type_delay: float = 0.1
-@export var live_time: float = 4.0
+@export var live_time: float = 8.0
 
 const SCENE: PackedScene = preload("uid://b2ob1pr5hrlos")
 
